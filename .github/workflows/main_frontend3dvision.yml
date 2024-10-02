@@ -25,7 +25,10 @@ jobs:
         run: |
           npm install
           npm run build --if-present
-          npm run test --if-present
+          # Ejecuta las pruebas sin hacer que falle el flujo de trabajo si no hay pruebas
+          npm run test --if-present -- --passWithNoTests 
+          # Alternativamente, si no deseas ejecutar pruebas, puedes comentar la línea de abajo:
+          # npm run test --if-present
       
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
@@ -40,7 +43,7 @@ jobs:
       name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
     permissions:
-      id-token: write #This is required for requesting the JWT
+      id-token: write # This is required for requesting the JWT
 
     steps:
       - name: Download artifact from build job
@@ -62,4 +65,3 @@ jobs:
           app-name: 'frontend3dvision'
           slot-name: 'Production'
           package: ./build
-          
