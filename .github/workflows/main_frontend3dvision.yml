@@ -61,5 +61,5 @@ jobs:
         with:
           app-name: 'frontend3dvision'
           slot-name: 'Production'
-          package: .
+          package: ./build
           
